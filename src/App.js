@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import Container from "./components/styles/Container";
+import Title from "./components/styles/Title";
+import Slogan from "./components/styles/Slogan";
+import VideoFrame from "./components/styles/VideoFrame";
+import Question from "./components/styles/Question";
+import BedsContainer from "./components/styles/BedsContainer";
+import Number from "./components/styles/Number";
+import Buttons from "./components/styles/Button";
 
-function App() {
+const App = () => {
+
+    const [bedsNumber, changeBedsNumber] = useState(3);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Title>MIKHEEV/ARCHITECT</Title>
+      <Slogan>
+        один шаг до интерьера <br /> вашей мечты!
+      </Slogan>
+      <VideoFrame />
+      <Question>
+        Введите количество человек, ПРОЖИВАЮЩИХ в данной комнате
+      </Question>
+      <Number changeBedsNumber={changeBedsNumber}/>
+      <BedsContainer bedsNumber={bedsNumber}/>
+        <Question>
+            Есть ли среди проживающих пары?
+        </Question>
+        <Buttons/>
+
+    </Container>
   );
-}
+};
 
 export default App;
