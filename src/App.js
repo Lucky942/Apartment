@@ -10,8 +10,8 @@ import Number from "./components/styles/Number";
 import Buttons from "./components/styles/Button";
 
 const App = () => {
-
-    const [bedsNumber, changeBedsNumber] = useState(3);
+  const [bedsNumber, changeBedsNumber] = useState(1);
+  const [isCouple, setCouple] = useState(false);
 
   return (
     <Container>
@@ -23,13 +23,23 @@ const App = () => {
       <Question>
         Введите количество человек, ПРОЖИВАЮЩИХ в данной комнате
       </Question>
-      <Number changeBedsNumber={changeBedsNumber}/>
-      <BedsContainer bedsNumber={bedsNumber}/>
-        <Question>
-            Есть ли среди проживающих пары?
-        </Question>
-        <Buttons/>
+      <Number changeBedsNumber={changeBedsNumber} />
+      <BedsContainer isCouple={isCouple} bedsNumber={bedsNumber} />
 
+      {bedsNumber > 1 &&
+        ((isCouple && (
+          <React.Fragment>
+            <Question>
+              Выберите нужные кровати для создания одной двуспальной
+            </Question>
+            <button onClick={() => setCouple(false)}>Отменить</button>
+          </React.Fragment>
+        )) || (
+          <React.Fragment>
+            <Question>Есть ли среди проживающих пары?</Question>
+            <Buttons setCouple={setCouple} />
+          </React.Fragment>
+        ))}
     </Container>
   );
 };

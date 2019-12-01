@@ -1,5 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useRef } from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
+import { setPeopleNumber } from "../../redux/reducers/peopleReducer";
 
 const Input = styled.input`
   border: none;
@@ -10,22 +12,22 @@ const Input = styled.input`
   width: 35px;
   margin-bottom: 120px;
   color: #cabd99;
-  
+
   &:focus {
     outline: none;
     border-bottom: 1px solid #cabd99;
   }
 `;
 
-export default ({ changeBedsNumber }) => {
+const Number = ({ setPeopleNumber, changeBedsNumber }) => {
+  let number = useRef(3);
 
-    let number = useRef(3);
+  const handleChange = () => {
+    changeBedsNumber(number.current.value);
+    setPeopleNumber(number.current.value);
+  };
 
-    const handleChange = () => {
-        changeBedsNumber(number.current.value);
-    };
+  return <Input onChange={handleChange} ref={number} placeholder={3} />;
+};
 
-    return (
-        <Input onChange={handleChange} ref={number} placeholder={3}/>
-    );
-}
+export default connect(null, { setPeopleNumber })(Number);

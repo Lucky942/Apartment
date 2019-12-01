@@ -1,11 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-const ButtonsContainer = styled.div`
-    display: flex;
-    justify-content: center;
-`;
-
 const Button = styled.button`
   border-radius: 50%;
   border: none;
@@ -15,10 +10,10 @@ const Button = styled.button`
   margin: 0 10px;
 `;
 
-export default () => {
+export default ({ setCouple }) => {
   return (
     <>
-      <Button>Да</Button>
+      <Button onClick={() => setCouple(true)}>Да</Button>
       <Button>Нет</Button>
     </>
   );
