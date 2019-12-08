@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Bed from "./Bed";
 import BigBed from "./BigBed";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import {
   setAge,
   setGender,
   setName,
-  setPeopleNumber
+  setPeopleNumber,
+  setPersonInCouple
 } from "../../redux/reducers/peopleReducer";
 
 const BedsContainer = styled.div`
@@ -22,11 +23,14 @@ const BedsComponent = ({
   people,
   setName,
   setAge,
-  setGender
+  setGender,
+  couple,
+  setPersonInCouple,
+  isReady
 }) => {
-  const [couple, setState] = useState({ coupleSelected: false, couple: [] });
+  //const [couple, setState] = useState({ coupleSelected: false, couple: [] });
 
-  const setCouple = number => {
+  /*const setCouple = number => {
     if (couple.couple.includes(number) && couple.couple.length === 1) {
       setState({ ...couple, couple: [] });
     } else if (!couple.couple.includes(number) && couple.couple.length === 1) {
@@ -34,14 +38,16 @@ const BedsComponent = ({
     } else {
       setState({ ...couple, couple: [...couple.couple, number] });
     }
-  };
+  };*/
 
   const getBeds = () => {
     /*let i = 0,*/
     let beds = [];
-    couple.couple.length === 2 && isCouple &&
+    couple.couple.length === 2 &&
+      isCouple &&
       beds.push(
         <BigBed
+          isReady={isReady}
           personInfo={people.filter(elem =>
             couple.couple.includes(elem.number)
           )}
@@ -57,13 +63,14 @@ const BedsComponent = ({
       if (!(couple.couple.includes(people[i].number) && couple.coupleSelected))
         beds.push(
           <Bed
+            isReady={isReady}
             isCouple={isCouple}
             personInfo={people[i]}
             setName={setName}
             setAge={setAge}
             setGender={setGender}
             coupleSelected={couple.coupleSelected}
-            setInCouple={setCouple}
+            setInCouple={setPersonInCouple}
             key={i}
           />
         );
@@ -92,7 +99,8 @@ const BedsComponent = ({
 
 const mapStateToProps = state => {
   return {
-    people: state.peopleReducer.people
+    people: state.peopleReducer.people,
+    couple: state.peopleReducer.couple
   };
 };
 
@@ -100,5 +108,6 @@ export default connect(mapStateToProps, {
   setName,
   setAge,
   setGender,
-  setPeopleNumber
+  setPeopleNumber,
+  setPersonInCouple
 })(BedsComponent);

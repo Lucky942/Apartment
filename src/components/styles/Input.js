@@ -4,10 +4,11 @@ import styled from "styled-components";
 const InputsContainer = styled.div`
   text-align: left;
   width: 80%;
-  padding-bottom: 40px;
+  padding: 0 0 40px 0;
   font-family: "Ledger", serif;
   text-transform: uppercase;
-  font-size: 16px;
+  font-size: 14px;
+  margin: ${props => props.bigBed && "0 15px"}
 `;
 
 const Input = styled.input`
@@ -31,9 +32,9 @@ const Select = styled.select`
   font-size: 16px;
 `;
 
-export default ({ personInfo, setName, setAge, setGender }) => {
+export default ({ bigBed, personInfo, setName, setAge, setGender }) => {
   return (
-    <InputsContainer>
+    <InputsContainer bigBed={bigBed}>
       <div>
         <label>
           {" "}

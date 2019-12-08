@@ -3,34 +3,13 @@ import produce from "immer";
 const SET_NAME = "SET_NAME",
   SET_AGE = "SET_AGE",
   SET_GENDER = "SET_GENDER",
-  SET_PEOPLE_NUMBER = "SET_PEOPLE_NUMBER";
+  SET_PEOPLE_NUMBER = "SET_PEOPLE_NUMBER",
+  SET_PERSON_IN_COUPLE = "SET_PERSON_IN_COUPLE";
 
 let initialState = {
-  people: [{ number: 0, name: "", age: "", gender: "М" }]
+  people: [{ number: 0, name: "", age: "", gender: "М" }],
+  couple: { coupleSelected: false, couple: [] }
 };
-
-/*const peopleReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case SET_PEOPLE_NUMBER:
-      let stateCopy = { ...state };
-      stateCopy.people = [...state.people];
-      if (action.number > state.people.length) {
-        let i = state.people.length;
-        while (i < action.number) {
-          stateCopy.people = [
-            ...stateCopy.people,
-            { number: i, name: null, age: null, gender: null }
-          ];
-          i++;
-        }
-      } else {
-        stateCopy.people.splice(action.number - 1);
-      }
-      return stateCopy;
-    default:
-      return state;
-  }
-};*/
 
 const peopleReducer = (state = initialState, action) =>
   produce(state, draft => {
@@ -50,6 +29,22 @@ const peopleReducer = (state = initialState, action) =>
           draft.people.splice(action.number);
         }
         break;
+      case SET_PERSON_IN_COUPLE:
+        if (action.number === null)
+          draft.couple = { coupleSelected: false, couple: [] };
+        else if (
+          draft.couple.couple.includes(action.number) &&
+          draft.couple.couple.length === 1
+        )
+          draft.couple = { coupleSelected: false, couple: [] };
+        else if (
+          !draft.couple.couple.includes(action.number) &&
+          draft.couple.couple.length === 1
+        ) {
+          draft.couple.coupleSelected = true;
+          draft.couple.couple = [...draft.couple.couple, action.number];
+        } else draft.couple.couple = [...draft.couple.couple, action.number];
+        break;
       case SET_NAME:
         draft.people[action.number].name = action.name;
         break;
@@ -68,6 +63,10 @@ export const setAge = (age, number) => ({ type: SET_AGE, age, number });
 export const setGender = (gender, number) => ({
   type: SET_GENDER,
   gender,
+  number
+});
+export const setPersonInCouple = (number = null) => ({
+  type: SET_PERSON_IN_COUPLE,
   number
 });
 

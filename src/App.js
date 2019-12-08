@@ -8,10 +8,14 @@ import Question from "./components/styles/Question";
 import BedsContainer from "./components/styles/BedsContainer";
 import Number from "./components/styles/Number";
 import Buttons from "./components/styles/Button";
+import { connect } from "react-redux";
+import ChooseBedsQuestion from "./components/styles/ChooseBedsQuestion";
+import CoupleExistingQuestion from "./components/styles/CoupleExistingQuestion";
 
-const App = () => {
+const App = ({ coupleSelected }) => {
   const [bedsNumber, changeBedsNumber] = useState(1);
   const [isCouple, setCouple] = useState(false);
+  const [isReady, setReady] = useState(false);
 
   return (
     <Container>
@@ -24,24 +28,23 @@ const App = () => {
         Введите количество человек, ПРОЖИВАЮЩИХ в данной комнате
       </Question>
       <Number changeBedsNumber={changeBedsNumber} />
-      <BedsContainer isCouple={isCouple} bedsNumber={bedsNumber} />
+      <BedsContainer isReady={isReady} isCouple={isCouple} bedsNumber={bedsNumber} />
 
-      {bedsNumber > 1 &&
+      {bedsNumber > 1 && !isReady &&
         ((isCouple && (
-          <React.Fragment>
-            <Question>
-              Выберите нужные кровати для создания одной двуспальной
-            </Question>
-            <button onClick={() => setCouple(false)}>Отменить</button>
-          </React.Fragment>
-        )) || (
-          <React.Fragment>
-            <Question>Есть ли среди проживающих пары?</Question>
-            <Buttons setCouple={setCouple} />
-          </React.Fragment>
-        ))}
+          <ChooseBedsQuestion setReady={setReady} setCouple={setCouple}/>
+        )) ||
+          (!coupleSelected && (
+            <CoupleExistingQuestion setCouple={setCouple}/>
+          )))}
     </Container>
   );
 };
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    coupleSelected: state.peopleReducer.couple.coupleSelected
+  };
+};
+
+export default connect(mapStateToProps)(App);
