@@ -1,7 +1,7 @@
 import React from "react";
 import Question from "./Question";
-import { setPersonInCouple } from "../../redux/reducers/peopleReducer";
 import { useDispatch } from "react-redux";
+import {setPersonInCouple} from "../../redux/reducers/actions";
 
 export default ({ setReady, setCouple }) => {
   const dispatch = useDispatch();
@@ -9,7 +9,7 @@ export default ({ setReady, setCouple }) => {
   return (
     <React.Fragment>
       <Question>
-        Выберите нужные кровати для создания одной двуспальной
+        Кликните на нужные кровати для создания одной двуспальной
       </Question>
       <button onClick={() => setReady(true)}>Готово</button>
       <button

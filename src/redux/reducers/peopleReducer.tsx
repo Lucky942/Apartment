@@ -1,17 +1,27 @@
 import produce from "immer";
+import {
+  PeopleActionTypes,
+  SET_AGE, SET_BED_SIDE_TABLE_STATUS,
+  SET_GENDER,
+  SET_NAME,
+  SET_PEOPLE_NUMBER,
+  SET_PERSON_IN_COUPLE, SET_PETS_EXISTING_STATUS,
+  SystemState
+} from "./types";
 
-const SET_NAME = "SET_NAME",
-  SET_AGE = "SET_AGE",
-  SET_GENDER = "SET_GENDER",
-  SET_PEOPLE_NUMBER = "SET_PEOPLE_NUMBER",
-  SET_PERSON_IN_COUPLE = "SET_PERSON_IN_COUPLE";
-
-let initialState = {
-  people: [{ number: 0, name: "", age: "", gender: "М" }],
-  couple: { coupleSelected: false, couple: [] }
+let initialState: SystemState = {
+  people: [
+    { number: 0, name: "", age: "", gender: "М", bedSideTableStatus: true }
+  ],
+  couple: { coupleSelected: false, couple: [] },
+  bedSideTables: 0,
+  pets: {
+    isExisting: false,
+    list: []
+  }
 };
 
-const peopleReducer = (state = initialState, action) =>
+const peopleReducer = (state = initialState, action: PeopleActionTypes) : SystemState =>
   produce(state, draft => {
     // eslint-disable-next-line default-case
     switch (action.type) {
@@ -21,7 +31,13 @@ const peopleReducer = (state = initialState, action) =>
           while (i < action.number) {
             draft.people = [
               ...draft.people,
-              { number: i, name: "", age: "", gender: "М" }
+              {
+                number: i,
+                name: "",
+                age: "",
+                gender: "М",
+                bedSideTableStatus: true
+              }
             ];
             i++;
           }
@@ -54,20 +70,13 @@ const peopleReducer = (state = initialState, action) =>
       case SET_GENDER:
         draft.people[action.number].gender = action.gender;
         break;
+      case SET_BED_SIDE_TABLE_STATUS:
+        draft.people[action.number].bedSideTableStatus = false;
+        break;
+      case SET_PETS_EXISTING_STATUS:
+        draft.pets.isExisting = true;
+        break;
     }
   });
-
-export const setPeopleNumber = number => ({ type: SET_PEOPLE_NUMBER, number });
-export const setName = (name, number) => ({ type: SET_NAME, name, number });
-export const setAge = (age, number) => ({ type: SET_AGE, age, number });
-export const setGender = (gender, number) => ({
-  type: SET_GENDER,
-  gender,
-  number
-});
-export const setPersonInCouple = (number = null) => ({
-  type: SET_PERSON_IN_COUPLE,
-  number
-});
 
 export default peopleReducer;

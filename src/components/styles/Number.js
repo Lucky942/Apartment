@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { setPeopleNumber } from "../../redux/reducers/peopleReducer";
+import {setPeopleNumber} from "../../redux/reducers/actions";
 
 const Input = styled.input`
   border: none;

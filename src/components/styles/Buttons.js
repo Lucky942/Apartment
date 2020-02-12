@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Button = styled.button`
+export const Button = styled.button`
   border-radius: 50%;
   border: none;
   background-color: #cabd99;
@@ -10,10 +10,10 @@ const Button = styled.button`
   margin: 0 10px;
 `;
 
-export default ({ setCouple }) => {
+export default ({ handleYes }) => {
   return (
     <>
-      <Button onClick={() => setCouple(true)}>Да</Button>
+      <Button onClick={handleYes ? () => handleYes(true) : null}>Да</Button>
       <Button>Нет</Button>
     </>
   );

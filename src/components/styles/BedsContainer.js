@@ -3,13 +3,7 @@ import styled from "styled-components";
 import Bed from "./Bed";
 import BigBed from "./BigBed";
 import { connect } from "react-redux";
-import {
-  setAge,
-  setGender,
-  setName,
-  setPeopleNumber,
-  setPersonInCouple
-} from "../../redux/reducers/peopleReducer";
+import {setAge, setGender, setName, setPeopleNumber, setPersonInCouple} from "../../redux/reducers/actions";
 
 const BedsContainer = styled.div`
   display: grid;
@@ -51,6 +45,7 @@ const BedsComponent = ({
           personInfo={people.filter(elem =>
             couple.couple.includes(elem.number)
           )}
+          bedsNumber={bedsNumber}
           key={bedsNumber}
           setName={setName}
           setAge={setAge}
